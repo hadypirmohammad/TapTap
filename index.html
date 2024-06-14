@@ -3,12 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | TeleTap</title>
+    <title>TeleTap</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" width=600 height=960 tabindex="-1" style="width: 600px; height: 960px; background: #CCCCCC"></canvas>
-    <script src="Build/NewBuild.loader.js"></script>
+    <script src="Build/ذعهمی.loader.js"></script>
     <script>
+      
       var unityInstance = UnityLoader.instantiate("unityContainer","Build/_Build.json",{onProgress: UnityProgress })
       var obj = {id:window.Telegram.WebApp.initDataUnsafe.user.id, name:window.Telegram.WebApp.initDataUnsafe.user.username, referal:window.Telegram.WebApp.initDataUnsafe.start_param};
       var data = JSON.stringify(obj);
@@ -22,7 +24,9 @@
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var warningBanner = document.querySelector("#unity-warning");
 
-      
+
+
+
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
@@ -42,9 +46,9 @@
       }
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/NewBuild.data",
-        frameworkUrl: "Build/NewBuild.framework.js",
-        codeUrl: "Build/NewBuild.wasm",
+        dataUrl: "Build/ذعهمی.data",
+        frameworkUrl: "Build/ذعهمی.framework.js",
+        codeUrl: "Build/ذعهمی.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "TeleTap",
