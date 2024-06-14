@@ -5,20 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>TeleTap</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="Build/ذعهمی.loader.js"></script>
+    
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" width=600 height=960 tabindex="-1" style="width: 600px; height: 960px; background: #CCCCCC"></canvas>
-    
+    <script src="Build/ذعهمی.loader.js"></script>
     <script>
       
-      
-      var obj = {id:window.Telegram.WebApp.initDataUnsafe.user.id, name:window.Telegram.WebApp.initDataUnsafe.user.username, referal:window.Telegram.WebApp.initDataUnsafe.start_param};
-      var data = JSON.stringify(obj);
-      console.log(data);
-      var unityInstance = Loader.instantiate("unityContainer","Build/_Build.json",{onProgress: UnityProgress });
-      unityInstance.SendMessage('GameManager','GetTelegramId',data);
-
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
