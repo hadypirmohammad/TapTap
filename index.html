@@ -11,7 +11,24 @@
     <canvas id="unity-canvas" width=600 height=960 tabindex="-1" style="width: 600px; height: 960px; background: #CCCCCC"></canvas>
     <script src="Build/ذعهمی.loader.js"></script>
     <script>
-      
+      var socket = new WebSocket("ws://127.0.0.1:5555");
+    
+      socket.onopen = function(e) {
+          console.log('Connected to server!');
+      }
+
+      socket.onclose = function(e) {
+          console.log('Disconnected from server');
+      }
+
+      socket.onmessage = function(e) {
+          console.log('Message from server:\n'+e.data);
+          MyGameInstance.SendMessage('GameManager','GetSocket',e.data);
+      }
+
+      socket.onerror = function(e) {
+          console.log('An error has occured!\n'+e.message);
+      }
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
