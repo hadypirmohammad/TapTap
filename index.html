@@ -47,7 +47,7 @@
       var socket = new WebSocket("http://203.161.41.167:5555");
     
       socket.onopen = function(e) {
-        
+        console.log("Connceted server");
         const intervalId = setInterval(()=>{
           if (UnityObject !== null) {
             clearInterval(intervalId); // Clear the interval when UnityObject is filled
@@ -65,6 +65,7 @@
       }
 
       socket.onmessage = function(e) {
+        console.log("get Message");
         UnityObject.SendMessage('GameManager', 'GetSocket',e.data);
       }
 
