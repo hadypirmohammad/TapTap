@@ -44,7 +44,7 @@
         console.error("Error loading Unity:", message);
       });
 
-      var socket = new WebSocket("http://203.161.41.167:5556");
+      var socket = new WebSocket("wss://203.161.41.167:5556");
     
       socket.onopen = function(e) {
         console.log("Connceted server");
