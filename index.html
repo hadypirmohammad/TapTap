@@ -19,7 +19,7 @@
 
         var canvas = document.querySelector("#unity-canvas");
         canvas.style.width = "100%";
-        canvas.style.height = "100%";
+        canvas.style.height = window.innerHeight;
         canvas.style.position = "fixed";
 
         document.body.style.textAlign = "left";
@@ -44,10 +44,10 @@
         console.error("Error loading Unity:", message);
       });
 
-      var socket = new WebSocket("wss://203.161.41.167:5556");
+      var socket = new WebSocket("ws://203.161.41.167:5556");
     
       socket.onopen = function(e) {
-        console.log("Connceted server");
+        
         const intervalId = setInterval(()=>{
           if (UnityObject !== null) {
             clearInterval(intervalId); // Clear the interval when UnityObject is filled
@@ -65,7 +65,6 @@
       }
 
       socket.onmessage = function(e) {
-        console.log("get Message");
         UnityObject.SendMessage('GameManager', 'GetSocket',e.data);
       }
 
