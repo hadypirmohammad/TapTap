@@ -4,9 +4,87 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+      /* loading animation */
+      * {
+        margin: 0;
+        padding: 0;
+      }
+  
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+  * {
+  font-family: "Roboto Flex", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+      .box-text {
+        color: rgba(66, 133, 244, 0.8);
+        text-shadow: 5px 5px 18px #263140, -3px -4px 13px #394960;
+      }
+  
+      .box-progress {
+        color: rgba(66, 133, 244, 0.3);
+        text-align: center;
+        font-weight: 700;
+        font-size: 36px;
+        position: relative;
+      }
+  
+      .box-progress::before {
+        content: attr(data-text);
+        position: absolute;
+        overflow: hidden;
+        max-width: 6.5em;
+        white-space: nowrap;
+        text-align: center;
+        color: #4285f4;
+        animation: loading 5s linear infinite;
+        /* Fixed animation */
+        text-shadow: 5px 5px 18px #263140, -3px -4px 13px #394960;
+      }
+  
+      .holder {
+        background: #252A30;
+        width: 100vw;
+        height: 100vh;
+        z-index: 30;
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* Added to center content */
+      }
+      .logo-img{
+        margin:auto;
+      }
+      .flex-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      @keyframes loading {
+        0% {
+          max-width: 0;
+        }
+  
+        100% {
+          max-width: 6.5em;
+          /* Ensures animation reaches full width */
+        }
+      }
+    </style>
     <title>TeleTap</title>
   </head>
-  <body style="background: #1A1829; text-align: center; padding: 0; border: 0; margin: 0;">
+  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
+    <div id="loading" class="holder">
+      <div class="flex-container">
+        <img class="logo-img" width="100" src="./logo.png" alt="loading raccoon" />
+        <p class="box-progress" data-text="Racoin">
+          Racoin
+        </p>
+      </div>
+    </div>
     <canvas id="unity-canvas" width=390 height=844 tabindex="-1" style="width: 390px; height: 844px; background: #BFBFBF"></canvas>
     <script src="Build/ذعهمی.loader.js"></script>
     <script>
@@ -19,12 +97,12 @@
 
         var canvas = document.querySelector("#unity-canvas");
         canvas.style.width = "100%";
-        canvas.style.height = "100%";
+        canvas.style.height = window.Telegram.WebApp.viewportHeight;
         canvas.style.position = "fixed";
 
         document.body.style.textAlign = "left";
       }
-      var UnityObject = null;
+
       createUnityInstance(document.querySelector("#unity-canvas"), {
         dataUrl: "Build/ذعهمی.data",
         frameworkUrl: "Build/ذعهمی.framework.js",
@@ -38,39 +116,13 @@
       },(progress) => {
         console.log("Loading progress:", progress);
       }).then((unityInstance) => {
+        const element = document.getElementById("loading");
+        element.remove();
         console.log("instance filled");
         UnityObject = unityInstance;
       }).catch((message) => {
         console.error("Error loading Unity:", message);
       });
-
-      var socket = new WebSocket("ws://203.161.41.167:5556");
-    
-      socket.onopen = function(e) {
-        
-        const intervalId = setInterval(()=>{
-          if (UnityObject !== null) {
-            clearInterval(intervalId); // Clear the interval when UnityObject is filled
-            console.log("UnityObject connected!");
-            UnityObject.SendMessage('GameManager', 'Connected');
-          }
-        },100);
-        
-
-      }
-
-      socket.onclose = function(e) {
-        console.log(e);
-        UnityObject.SendMessage('GameManager', 'Ondisconnect');
-      }
-
-      socket.onmessage = function(e) {
-        UnityObject.SendMessage('GameManager', 'GetSocket',e.data);
-      }
-
-      socket.onerror = function(e) {
-        console.log(e);
-      }
     </script>
   </body>
 </html>
